@@ -1,6 +1,4 @@
 #!/usr/bin/python
-import numpy
-import matplotlib.pyplot as plot
 import visa
  
 """ Program to return control to the scope keyboard """
