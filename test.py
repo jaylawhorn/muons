@@ -92,8 +92,8 @@ else:
     tUnit = "S"
 
 # Plot the data
-plot.plot(time, data1, 'b.-')
-plot.title("Oscilloscope Channel 1")
+plot.plot(time, data2, 'b.-')
+plot.title("Oscilloscope Channel 2")
 plot.ylabel("Voltage (V)")
 plot.xlabel("Time (" + tUnit + ")")
 #plot.xlim(time[0], time[599])
