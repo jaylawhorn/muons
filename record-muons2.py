@@ -43,26 +43,31 @@ while True:
 	test.write(":WAV:POIN:MODE NOR")
 	test.write(":WAV:DATA? CHAN1")
 	rawdata1 = test.read()
-#	print "channel 1"
-#	print rawdata1
-
 	test.write(":WAV:DATA? CHAN2")
 	rawdata2 = test.read()
-#	print "channel 2"
-#	print rawdata2
+	test.write(":WAV:DATA? CHAN3")
+	rawdata3 = test.read()
+	test.write(":WAV:DATA? CHAN4")
+	rawdata4 = test.read()
 
 	# Process the data into numerical form
 	data1 = numpy.frombuffer(rawdata1, 'B')
 	data2 = numpy.frombuffer(rawdata2, 'B')
+	data3 = numpy.frombuffer(rawdata3, 'B')
+	data4 = numpy.frombuffer(rawdata4, 'B')
 
 	# Every other data point is a blank value -- clear these out
 	data1 = data1[range(data1.size-1202,data1.size,2)]
 	data2 = data2[range(data2.size-1202,data2.size,2)]
+	data3 = data3[range(data3.size-1202,data3.size,2)]
+	data4 = data4[range(data4.size-1202,data4.size,2)]
 
 	# Walk through the data, and map it to actual voltages
 	# First invert the data (ya rly)
 	data1 = data1 * -1 + 255
 	data2 = data2 * -1 + 255
+	data3 = data4 * -1 + 255
+	data4 = data4 * -1 + 255
 	
 	# NOTE: these scale factors are not working for me--are you sure they're right? -SLE
 	
@@ -71,6 +76,8 @@ while True:
 	# get the actual voltage.
 	data1 = (data1 - 130.0 - voltoffset/voltscale*25) / 25 * voltscale
 	data2 = (data2 - 130.0 - voltoffset/voltscale*25) / 25 * voltscale
+	data3 = (data3 - 130.0 - voltoffset/voltscale*25) / 25 * voltscale
+	data4 = (data4 - 130.0 - voltoffset/voltscale*25) / 25 * voltscale
 	
 	# Now, generate a time axis.  The scope display range is 0-600, with 300 being
 	# time zero.
@@ -80,7 +87,7 @@ while True:
 	print 'Saving a coincidence event...'
 	f = open('event_' + str(n),'w')
 	for x in range(len(time)):
-		f.write(str(time[x]) + '\t' + str(data1[x]) + '\t' + str(data2[x]) + '\n')
+		f.write(str(time[x]) + '\t' + str(data1[x]) + '\t' + str(data2[x]) + '\t' + str(data3[x]) + '\t' + str(data4[x]) + '\n')
 	f.close()
 	
 	# Start data acquisition again
