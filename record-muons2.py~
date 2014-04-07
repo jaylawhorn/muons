@@ -67,7 +67,7 @@ while (n<2):
         
         scopewrite(":WAV:DATA? CHAN1")
         rawdata = []
-        for i in xrange(10):
+        for i in xrange(100):
             rawdata += scope.read()
             rawdata = ''.join(rawdata)
             data = numpy.frombuffer(rawdata, 'B')
