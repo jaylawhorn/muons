@@ -67,7 +67,7 @@ sleep(1)
 
 n = 0; # Number of coincidence events
 
-while (1):
+while (n<10):
 	# Wait until the scope is triggered:
 	scopewrite(":TRIG:STAT?")
 	status = scope.read();
